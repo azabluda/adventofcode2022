@@ -1,31 +1,23 @@
 # https://adventofcode.com/2022/day/5
 # Day 5: Supply Stacks
 
-def supply_stacks(txt):
-    moves = []
-    stacks = [''] * 10
-    for line in txt.split('\n')[::-1]:
-        if 'm' in line:
-            line = line.replace('move ','')
-            line = line.replace('from ','')
-            line = line.replace('to ','')
-            moves += [*map(int, line.split())],
-        if '[' in line:
-            for i, ch in enumerate(line):
-                if ch.isupper():
-                    stacks[1+(i-1)//4] += ch
-    stacks = [stacks, stacks[::]]
-    for m, f, t in moves[::-1]:
-        for i, ss in enumerate(stacks):
-            ss[t] += ss[f][-m:][::2*i-1]
-            ss[f]  = ss[f][:-m]
-    return [''.join(s[-1:] for s in ss) for ss in stacks]
+def supply_stacks(data):
+    for part in -1, 1:
+        lines = data.split('\n')
+        delim = lines.index('')
+        stacks = lines[:delim-1]
+        stacks = [*zip(*stacks)] # transpose 😱
+        stacks = [''.join(stacks[i]).strip()[::-1]
+                  for i in range(1, len(stacks), 4)]
+        for move in lines[delim+1:]:
+            _, cr, _, fr, _, to = move.split()
+            cr, fr, to = map(int, [cr, fr, to])
+            stacks[to-1] += stacks[fr-1][-cr:][::part]
+            stacks[fr-1]  = stacks[fr-1][:-cr]
+        print(''.join(s[-1] for s in stacks))
 
-
-
-_ = [*map(print, map(supply_stacks,
-[   
-"""
+def inputs():
+    yield """
     [D]    
 [N] [C]    
 [Z] [M] [P]
@@ -34,9 +26,9 @@ _ = [*map(print, map(supply_stacks,
 move 1 from 2 to 1
 move 3 from 1 to 3
 move 2 from 2 to 1
-move 1 from 1 to 2""",
+move 1 from 1 to 2"""
 
-"""
+    yield """
                         [R] [J] [W]
             [R] [N]     [T] [T] [C]
 [R]         [P] [G]     [J] [P] [T]
@@ -548,7 +540,7 @@ move 2 from 4 to 9
 move 1 from 7 to 9
 move 3 from 4 to 3
 move 1 from 3 to 6
-move 4 from 5 to 7""",
+move 4 from 5 to 7"""
 
-]))]
-
+for data in inputs():
+    supply_stacks(data.strip('\n'))
