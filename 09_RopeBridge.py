@@ -1,24 +1,31 @@
 # https://adventofcode.com/2022/day/9
 # Day 9: Rope Bridge
 
-def rope_bridge(data):
-    for length in 2, 10:
-        trace = {0}
-        knots = [0] * length
-        for line in data.split('\n'):
-            dir, cnt = line.split(' ')
-            move = 1j ** 'RULD'.index(dir)
-            for _ in range(int(cnt)):
-                knots[0] += move
-                for i in range(1, length):
-                    tension = (knots[i] - knots[i-1]) / 2
-                    tension = int(tension.real) + 1j * int(tension.imag)
-                    if tension:
-                        knots[i] = knots[i-1] + tension
-                trace.add(knots[-1])
-        print(len(trace))
+from itertools import *
+from typing import *
 
-def inputs():
+def yield_moves(line: str) -> Generator[complex, None, None]:
+    dir, cnt = line.split(' ')
+    return repeat(1j ** 'RULD'.index(dir), int(cnt))
+
+def move_knot(prev: complex, curr: complex) -> complex:
+    diff2 = (curr - prev) / 2
+    tension = int(diff2.real) + 1j * int(diff2.imag)
+    return prev + tension if tension else curr
+
+def move_rope(rope: list[complex], move: complex) -> list[complex]:
+    return [*accumulate(rope[1:], move_knot, initial = rope[0] + move)]
+
+def solve_part(data: str, length: int) -> int:
+    moves = chain(*map(yield_moves, data.split('\n')))
+    ropes = accumulate(moves, move_rope, initial = [0] * length)
+    return len(set(rope[-1] for rope in ropes))
+
+def rope_bridge(data: str) -> None:
+    print(solve_part(data, 2), solve_part(data, 10))
+
+
+def inputs() -> Generator[str, None, None]:
     yield """
 R 4
 U 4
