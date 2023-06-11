@@ -1,5 +1,6 @@
 {
     "python.testing.pytestEnabled": true,
     "editor.inlayHints.enabled": "offUnlessPressed",
-    "dotnet.defaultSolution": "2022_adventofcode.sln"
+    "dotnet.defaultSolution": "2022_adventofcode.sln",
+    "cmake.configureOnOpen": true
 }
