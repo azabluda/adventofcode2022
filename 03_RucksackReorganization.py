@@ -2,9 +2,8 @@
 # Day 3: Rucksack Reorganization
 
 def prio(*arr):
-    from functools import reduce
     from string import ascii_letters
-    cmn = reduce(set.__and__, map(set, arr))
+    cmn = set.intersection(*map(set, arr))
     return 1 + ascii_letters.find(*cmn)
 
 def rucksack_reorganization(data):
