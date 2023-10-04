@@ -1,31 +1,29 @@
 # https://adventofcode.com/2022/day/13
 # Day 13: Distress Signal
 
+from bisect import bisect_right
 from functools import cmp_to_key
-from itertools import pairwise, zip_longest
+from itertools import count, starmap, zip_longest
 
-def cmp(a, b):
-    if type(a) == type(b) == int:
-        return (a > b) + (a >= b) - 1
-    if type(a) == int: a = [a]
-    if type(b) == int: b = [b]
-    for x, y in zip_longest(a, b):
-        if x is None: return -1
-        if y is None: return 1
-        rec = cmp(x, y)
-        if rec: return rec
-    return 0
+def cmp(l, r):
+    if l == None: return -1
+    if r == None: return 1
+    if type(l) == type(r) == int: return (l > r) + (l >= r) - 1
+    if type(l) == int: l = [l]
+    if type(r) == int: r = [r]
+    return next(filter(None, starmap(cmp, zip_longest(l, r))), 0)
 
 def distress_signal(data):
+    A = [*map(eval, data.split())]
+
     # part 1
-    seq = filter(all, pairwise(data.split('\n')))
-    print(sum(i + 1 for i, p in enumerate(seq) if cmp(*map(eval, p)) < 0))
-    
+    print(sum(i for i, l, r in zip(count(1), A[::2], A[1::2]) if cmp(l, r) < 0))
+
     # part 2
-    div = [[2]], [[6]]
-    seq = sorted([*div, *map(eval, data.split())], key=cmp_to_key(cmp))
-    a, b = (i + 1 for i, x in enumerate(seq) if x in div)
-    print(a * b)
+    key = cmp_to_key(cmp)
+    A.sort(key=key)
+    fnd = lambda x: bisect_right(A, key(x), key=key)
+    print((fnd(2) + 1) * (fnd(6) + 2))
 
 def inputs():
     yield """
@@ -506,4 +504,4 @@ def inputs():
 """
 
 for data in inputs():
-    distress_signal(data.strip('\n'))
+    distress_signal(data)
