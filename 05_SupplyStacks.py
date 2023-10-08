@@ -6,12 +6,12 @@ def supply_stacks(data):
         lines = data.split('\n')
         delim = lines.index('')
         stacks = lines[:delim-1]
-        stacks = [*zip(*stacks)] # transpose 😱
-        stacks = [''.join(stacks[i]).strip()[::-1]
-                  for i in range(1, len(stacks), 4)]
-        for move in lines[delim+1:]:
-            _, cr, _, fr, _, to = move.split()
-            cr, fr, to = map(int, [cr, fr, to])
+        moves = lines[delim+1:]
+        grid = [line[1::4] for line in stacks]
+        rot90 = [*zip(*grid[::-1])] # lol wtf 😱
+        stacks = [''.join(row).strip() for row in rot90]
+        for move in moves:
+            cr, fr, to = map(int, move.split()[1::2])
             stacks[to-1] += stacks[fr-1][-cr:][::part]
             stacks[fr-1]  = stacks[fr-1][:-cr]
         print(''.join(s[-1] for s in stacks))
