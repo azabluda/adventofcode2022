@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03_RucksackReorganization",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06_TuningTrouble", "06_TuningTrouble\06_TuningTrouble.csproj", "{C0932330-442D-4D95-8853-C82F54B69AB0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FunCoding2023", "FunCoding2023", "{6CB06BC4-008B-4F94-B0A4-1C17C1C5C865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacmanBfsViz", "FunCoding2023\PacmanBfsViz\PacmanBfsViz.csproj", "{6209E178-866C-4A1C-87C8-5F42F082AFFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +25,18 @@ Global
 		{C0932330-442D-4D95-8853-C82F54B69AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0932330-442D-4D95-8853-C82F54B69AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0932330-442D-4D95-8853-C82F54B69AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6209E178-866C-4A1C-87C8-5F42F082AFFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6209E178-866C-4A1C-87C8-5F42F082AFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6209E178-866C-4A1C-87C8-5F42F082AFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6209E178-866C-4A1C-87C8-5F42F082AFFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5060F2AC-F182-47D0-BF1D-95B1BBB5A01C}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6209E178-866C-4A1C-87C8-5F42F082AFFB} = {6CB06BC4-008B-4F94-B0A4-1C17C1C5C865}
 	EndGlobalSection
 EndGlobal
