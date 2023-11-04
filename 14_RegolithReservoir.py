@@ -23,7 +23,7 @@ def regolith_reservoir(data):
         x, y = 500, 0
         while y not in rocks[x]:
             col = rocks[x]
-            y = col[col.bisect_left(y)]
+            y = col[col.bisect_left(y)] # min(filter(y.__le__, col))
             if y == floor and not part1:
                 part1 = cnt
             if y not in rocks[x - 1]:
