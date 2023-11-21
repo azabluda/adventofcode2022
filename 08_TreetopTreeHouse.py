@@ -9,12 +9,11 @@ def tthouse(data: str) -> tuple[int, int]:
         M, R1, R2 = map(np.rot90, [M, R1, R2])
         for m, r1, r2 in zip(M, R1, R2):
             mono = []
-            top_or = lambda x: (mono or [x])[-1]
             for i in range(len(m)):
-                while m[top_or(i)] < m[i]:
+                while mono and m[mono[-1]] < m[i]:
                     mono.pop()
                 r1[i] |= not mono
-                r2[i] *= i - top_or(0)
+                r2[i] *= i - (mono or [0])[-1]
                 mono.append(i)
     return sum(map(sum, R1)), max(map(max, R2))
 
